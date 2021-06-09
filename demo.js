@@ -81,6 +81,6 @@ var mapEvents = new H.mapevents.MapEvents(map);
 // window.addEventListener('resize', () => map.getViewPort().resize());
 var behavior = new H.mapevents.Behavior(mapEvents);
 
-setup(13.4,52.51)
-calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
-setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
+//setup(13.4,52.51)
+//calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
+//setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
