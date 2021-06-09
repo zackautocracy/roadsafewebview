@@ -83,13 +83,22 @@ var mapEvents = new H.mapevents.MapEvents(map);
 var behavior = new H.mapevents.Behavior(mapEvents);
 var str = '200 S Mathilda Ave, Sunnyvale, CA';
 function getPosition(s){
+  console.log("ana hna")
+  var object;
+  for (object of map.getObjects()){
+    if (object.id==="searchMarkers"){
+      map.removeObject(object);
+    }
+  }
   service.geocode({
     q: s
   }, (result) => {
     // Add a marker for each location found
+    var g = new H.map.Group()
+    g.id="searchMarkers"
     result.items.forEach((item) => {
       var search = new H.map.Marker(item.position);
-      map.addObject(search);
+      g.addObject(search);
       map.setCenter(search.getGeometry())
     });
   }, alert);
@@ -97,4 +106,13 @@ function getPosition(s){
 // setup(13.4,52.51)
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 // setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
-// getPosition("ambassade Tunisie Rabat")
+// getPosition("Av Hassan II temara")
+var searchBox=document.getElementById("searchInput")
+searchBox.addEventListener('keypress', (event) => {
+  if (event.keyCode === 13) {
+    var searchStr = searchBox.value
+    getPosition(searchStr)
+    event.preventDefault();
+  }
+
+})
