@@ -78,10 +78,14 @@ function setup(lng,lat){
   myPosition = new H.map.Marker({ lng: lng, lat: lat });
   map.addObject(myPosition);
 }
+function initSetup(lng,lat){
+  map.setZoom(4);
+  map.setCenter({ lng: lng, lat: lat });
+}
 var mapEvents = new H.mapevents.MapEvents(map);
 // window.addEventListener('resize', () => map.getViewPort().resize());
 var behavior = new H.mapevents.Behavior(mapEvents);
-var str = '200 S Mathilda Ave, Sunnyvale, CA';
+var searchMarker;
 function getPosition(s){
   var object;
   for (object of map.getObjects()){
@@ -99,21 +103,27 @@ function getPosition(s){
     result.items.forEach(function (item){
       console.log("kayn Items")
       map.setCenter(item.position);
-      var search = new H.map.Marker(item.position);
-      g.addObject(search);
+      map.setZoom(13);
+      searchMarker = new H.map.Marker(item.position);
+      g.addObject(searchMarker);
       map.addObject(g)
     });
   }, (error)=>{alert(error)});
 }
-setup(6.8498,33.9716 )
+setup(6.8498,33.9716)
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 // setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
 // getPosition("Av Hassan II temara")
+function routingFunc(){
+  var starter = myPosition.getGeometry();
+  var ender = searchMarker.getGeometry();
+  // console.log(searchMarker)
+  calcRoute(starter.lng,starter.lat,ender.lng,ender.lat)
+}
 var searchBox=document.getElementById("searchInput")
 searchBox.addEventListener('keypress', (event) => {
   if (event.keyCode === 13) {
     var searchStr = searchBox.value
     getPosition(searchStr)
-    // event.preventDefault();
   }
 })
