@@ -9,37 +9,27 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
   </head>
   <style>
-    .buttons{
+    .search-bar{
       z-index:1000;
       position:absolute;
-      bottom:0;
+      top:0;
       right:0;
-      width:90px;
-      height:100%;
+      width:100%;
+      height:100px;
       display:flex;
-      flex-direction:column-reverse;
+      justify-content:center;
     }
-    .button{
-      height:75px;
-      width:75px;
-      margin: 0px 15px 20px 0;
-      border-radius:38px;
-      border:none;
-      background:blue;
-      color:white;
-      text-align: center;
-      display:flex;
-      flex-direction: column;
-      justify-content: space-around;
+    .search{
+      width:90%;
+      height:50px;
+      border-radius:25px;
     }
   </style> 
   <body style="margin:0px;">
     <div style="width: 100%; height: 100%; padding: 0px;" id="mapContainer"></div>
     <script type="text/javascript" src="./demo.js"></script>
-    <!-- <div class="buttons">
-      <div class="button"><span>dir</span></div>
-      <div class="button"><span>loc</span></div>
-      <div class="button"><span>war</span></div>
-    </div> -->
+    <div class="search-bar">
+      <input id="searchInput" type="text" placeholder="Search" class="search">
+    </div>
   </body>
 </html>
