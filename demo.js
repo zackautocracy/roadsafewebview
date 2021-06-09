@@ -96,16 +96,16 @@ function getPosition(s){
     // Add a marker for each location found
     var g = new H.map.Group()
     g.id="searchMarkers"
-    result.items.forEach((item) => {
+    result.items.forEach(function (item){
       console.log("kayn Items")
+      map.setCenter(item.position);
       var search = new H.map.Marker(item.position);
       g.addObject(search);
-      map.setCenter(item.position);
       map.addObject(g)
     });
-  }, alert);
+  }, (error)=>{alert(error)});
 }
-// setup(13.4,52.51)
+setup(6.8498,33.9716 )
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 // setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
 // getPosition("Av Hassan II temara")
@@ -114,7 +114,6 @@ searchBox.addEventListener('keypress', (event) => {
   if (event.keyCode === 13) {
     var searchStr = searchBox.value
     getPosition(searchStr)
-    event.preventDefault();
+    // event.preventDefault();
   }
-
 })
