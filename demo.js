@@ -83,7 +83,6 @@ var mapEvents = new H.mapevents.MapEvents(map);
 var behavior = new H.mapevents.Behavior(mapEvents);
 var str = '200 S Mathilda Ave, Sunnyvale, CA';
 function getPosition(s){
-  console.log("ana hna")
   var object;
   for (object of map.getObjects()){
     if (object.id==="searchMarkers"){
@@ -93,10 +92,12 @@ function getPosition(s){
   service.geocode({
     q: s
   }, (result) => {
+    console.log("ana hna")
     // Add a marker for each location found
     var g = new H.map.Group()
     g.id="searchMarkers"
     result.items.forEach((item) => {
+      console.log("kayn Items")
       var search = new H.map.Marker(item.position);
       g.addObject(search);
       map.setCenter(search.getGeometry())
