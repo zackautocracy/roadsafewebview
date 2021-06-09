@@ -100,7 +100,8 @@ function getPosition(s){
       console.log("kayn Items")
       var search = new H.map.Marker(item.position);
       g.addObject(search);
-      map.setCenter(search.getGeometry())
+      map.setCenter(item.position);
+      map.addObject(g)
     });
   }, alert);
 }
