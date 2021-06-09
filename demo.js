@@ -10,6 +10,7 @@ var platform = new H.service.Platform({
 });
 
 var router = platform.getRoutingService(null, 8);
+var service = platform.getSearchService();
 
 var defaultLayers = platform.createDefaultLayers();
 
@@ -80,7 +81,20 @@ function setup(lng,lat){
 var mapEvents = new H.mapevents.MapEvents(map);
 // window.addEventListener('resize', () => map.getViewPort().resize());
 var behavior = new H.mapevents.Behavior(mapEvents);
-
-//setup(13.4,52.51)
-//calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
-//setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
+var str = '200 S Mathilda Ave, Sunnyvale, CA';
+function getPosition(s){
+  service.geocode({
+    q: s
+  }, (result) => {
+    // Add a marker for each location found
+    result.items.forEach((item) => {
+      var search = new H.map.Marker(item.position);
+      map.addObject(search);
+      map.setCenter(search.getGeometry())
+    });
+  }, alert);
+}
+// setup(13.4,52.51)
+// calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
+// setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
+// getPosition("ambassade Tunisie Rabat")
