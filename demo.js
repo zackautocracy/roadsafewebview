@@ -135,7 +135,7 @@ function getPosition(s) {
     });
   }, (error) => { alert(error) });
 }
-setup(6.8498,33.9716)
+// setup(6.8498,33.9716)
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 // setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
 // getPosition("Av Hassan II temara")
