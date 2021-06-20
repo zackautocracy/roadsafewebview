@@ -84,7 +84,16 @@ function setup(lng, lat) {
   myPosition = new H.map.DomMarker({ lng: lng, lat: lat }, {
     icon: new H.map.DomIcon(domIconElement, {
       onAttach: function (clonedElement, domIcon, domMarker) {
-        init (clonedElement,{ lng: lng, lat: lat })
+        clonedContent = clonedElement.getElementsByTagName('img')[0];
+
+        // // set last used value for rotation when dom icon is attached (back in map's viewport)
+        // clonedContent.style.transform = 'rotate(' + counter + 'deg)';
+
+        // // set interval to rotate icon's content by 45 degrees every second.
+        // interval = setInterval(function () {
+        //   clonedContent.style.transform = 'rotate(' + (counter += 45) + 'deg)';
+        // }, 1000)
+        init (clonedElement, { lng: lng, lat: lat })
       },
       onDetach: function (clonedElement, domIcon, domMarker) {
         // stop the rotation if dom icon is not in map's viewport
