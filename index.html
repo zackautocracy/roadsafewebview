@@ -66,7 +66,6 @@
     <div class="compass">
       <div class="arrow"></div>
       <div class="compass-circle"></div>
-      <div class="my-point"></div>
     </div>
     <button class="start-btn">Start compass</button>
   </body>
@@ -79,9 +78,6 @@
       navigator.userAgent.match(/AppleWebKit/);
 
     function init() {
-      startBtn.addEventListener("click", startCompass);
-      navigator.geolocation.getCurrentPosition(locationHandler);
-
       if (!isIOS) {
         window.addEventListener("deviceorientationabsolute", handler, true);
       }
@@ -121,8 +117,8 @@
     let pointDegree;
 
     function locationHandler(position) {
-      const { latitude, longitude } = position.coords;
-      pointDegree = calcDegreeToPoint(latitude, longitude);
+      // const { latitude, longitude } = position.coords;
+      pointDegree = calcDegreeToPoint(position.latitude, position.longitude);
 
       if (pointDegree < 0) {
         pointDegree = pointDegree + 360;
