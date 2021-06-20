@@ -94,6 +94,7 @@ function setup(lng, lat) {
         //   clonedContent.style.transform = 'rotate(' + (counter += 45) + 'deg)';
         // }, 1000)
         init (clonedElement, { lng: lng, lat: lat })
+        console.log()
       },
       onDetach: function (clonedElement, domIcon, domMarker) {
         // stop the rotation if dom icon is not in map's viewport
