@@ -8,7 +8,7 @@ function init(clonedElement,position) {
   if (!isIOS) {
     window.addEventListener('deviceorientationabsolute', handler, true);
   }
-  locationHandler(position)
+  // locationHandler(position)
 }
 
 function handler(e) {
