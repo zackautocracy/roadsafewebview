@@ -34,7 +34,7 @@ let pointDegree;
 
 function locationHandler(position) {
   // const { latitude, longitude } = position.coords;
-  pointDegree = calcDegreeToPoint(position.latitude, position.longitude);
+  pointDegree = calcDegreeToPoint(position.lat, position.lng);
 
   if (pointDegree < 0) {
     pointDegree = pointDegree + 360;
