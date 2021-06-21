@@ -21,7 +21,7 @@ var rotComp
 map.getViewModel().addEventListener('sync', function () {
   rotComp = map.getViewModel().getLookAtData().heading - 180
   alert(rotComp)
-}, {once: true })
+})
 var routeLine
 var startMarker
 var endMarker
