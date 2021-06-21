@@ -73,16 +73,18 @@ function setDangers () {
   }
   var dangers = new H.map.Group()
   dangers.id = 'danger'
+  dangers.addEventListener('longpress', function (evt) {
+    window.location.hash = evt.target.id
+  }, false);
   dangers.addEventListener('tap', function (evt) {
     // event target is the marker itself, group is a parent event target
     // for all objects that it contains
-    // var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-    //   // read custom data
-    //   content: evt.target.getData()
-    // });
-    // // show info bubble
-    // ui.addBubble(bubble);
-    window.location.hash = evt.target.id
+    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+      // read custom data
+      content: evt.target.getData()
+    });
+    // show info bubble
+    ui.addBubble(bubble);
   }, false);
   $.ajax({
     url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
@@ -92,8 +94,9 @@ function setDangers () {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
-        // ksidaIconElement.innerHTML = '<img id="'+el.id+'" style="border: 1px solid red" src="' + /*el.type*/ 'self' + '.png" width="100px"/>'
-        var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude })
+        var icon = new H.map.Icon(el.type+'.png');
+        var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: icon })
+        ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
         dangers.addObject(ksida)
       }
