@@ -96,6 +96,8 @@ function setDangers () {
     var ars = []
     var deltaLat = (0.01/111.10)
     var deltaLng = (0.01/111.32)
+    // var deltaLat = 2
+    // var deltaLng = 2
     data.forEach(function (el) {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
@@ -107,8 +109,16 @@ function setDangers () {
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
         dangers.addObject(ksida)
+        var customStyle = {
+          strokeColor: '#00B5FF',
+          fillColor: 'rgba(0, , 181, 0, 0.5)',
+          lineWidth: 1,
+          lineCap: 'square'
+        };
         ars[ars.length] = 'bbox:' + (parseFloat(el.location.longitude) - deltaLng) + ',' + (parseFloat(el.location.latitude) - deltaLat) + ',' + (parseFloat(el.location.longitude) + deltaLng) + ',' + (parseFloat(el.location.latitude) + deltaLat)
-        var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.longitude) - deltaLng, parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) + deltaLng, parseFloat(el.location.latitude) + deltaLat))}
+        var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) - deltaLng , parseFloat(el.location.latitude) + deltaLat , parseFloat(el.location.longitude) + deltaLng), { style: customStyle })
+      }
+      map.addObject(rect)
     })
     routingParameters['avoid[areas]'] = ars.join('|')
     // routingFunc()
