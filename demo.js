@@ -40,21 +40,21 @@ var onResult = function (result) {
 
       // Create a polyline to display the route:
       routeLine = new H.map.Polyline(linestring, {
-        style: { strokeColor: 'blue', lineWidth: 3 }
+        style: { strokeColor: '#00B5FF', lineWidth: 4 }
       });
 
-      routeLine.id = "route"
+      routeLine.id = 'route'
 
       var group = new H.map.Group();
-      group.id = "route"
+      group.id = 'route'
       // Create a marker for the start point:
-      startMarker = new H.map.Marker(section.departure.place.location);
+      // startMarker = new H.map.Marker(section.departure.place.location);
 
       // // Create a marker for the end point:
       endMarker = new H.map.Marker(section.arrival.place.location);
 
       // Add the route polyline and the two markers to the map:
-      group.addObject(startMarker)
+      // group.addObject(startMarker)
       group.addObject(endMarker)
       map.addObject(routeLine);
       map.addObject(group);
@@ -138,8 +138,6 @@ function getPosition(s) {
 }
 setup(6.8498,33.9716)
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
-// setTimeout(calcRoute, 20000,13.4,52.51,20,45.51);
-// getPosition("Av Hassan II temara")
 function routingFunc() {
   var starter = myPosition.getGeometry();
   var ender = searchMarker.getGeometry();
@@ -153,4 +151,6 @@ searchBox.addEventListener('keypress', (event) => {
     getPosition(searchStr)
   }
 })
-// setup(13.4, 52.51 )
+function goToMyPosition () {
+  map.setCenter(myPosition.getGeometry())
+}
