@@ -94,7 +94,7 @@ function setDangers () {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
-        var icon = new H.map.Icon(el.type+'.png');
+        var icon = new H.map.Icon(el.type.replace(' ','_')+'.png');
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: icon })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
