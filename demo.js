@@ -99,7 +99,7 @@ function setDangers () {
         console.log(el)
         var ic = ('https://zackautocracy.github.io/roadsafewebview/' + el.type.replace(' ','_') + '.png')
         console.log(ic)
-        var ksidaIcon = new H.map.Icon(ic, { size: { w: 75, h: 75 } });
+        var ksidaIcon = new H.map.Icon(ic, { size: { w: 50, h: 50 } });
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: ksidaIcon })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
