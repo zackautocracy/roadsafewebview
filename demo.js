@@ -69,7 +69,22 @@ var onResult = function (result) {
     });
   }
 };
+function setDangers () {
+  var object
+  for (object of map.getObjects()) {
+    if (object.id === 'danger') {
+      map.removeObject(object);
+    }
+  }
+  var dangers = new H.map.Group()
+  dangers.id = 'danger'
+  $.ajax({
+    url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
+  }).done(function(data) {
+    console.log("data d teb:" + data);
+  });
 
+}
 function calcRoute(startLng, startLat, destLng, destLat) {
   routingParameters['origin'] = startLat + ',' + startLng;
   routingParameters['destination'] = destLat + ',' + destLng;
