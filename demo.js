@@ -17,6 +17,7 @@ map.getViewModel().addEventListener('sync', function () {
   rotComp = ((map.getViewModel().getLookAtData().heading - 180) % 360)
   console.log("rotcomp: " + rotComp)
 })
+var ui = H.ui.UI.createDefault(map, defaultLayers);
 var routeLine
 var startMarker
 var endMarker
@@ -189,6 +190,7 @@ searchBox.addEventListener('keypress', (event) => {
 function goToMyPosition () {
   map.setCenter(myPosition.getGeometry())
 }
+
 /*
 function addInfoBubble(map) {
   var group = new H.map.Group();
