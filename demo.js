@@ -74,6 +74,8 @@ function setDangers () {
   }
   var dangers = new H.map.Group()
   dangers.id = 'danger'
+  
+  map.addObject(dangers)
   dangers.addEventListener('longpress', function (evt) {
     window.location.hash = evt.target.id
   }, false);
@@ -95,7 +97,8 @@ function setDangers () {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
-        var icon = new H.map.Icon(el.type.replace(' ','_')+'.png');
+        var ic = el.type.replace(' ','_') + '.png'
+        var icon = new H.map.Icon(ic);
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: icon })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
@@ -103,7 +106,6 @@ function setDangers () {
       }
     })
   });
-  map.addObject(dangers)
 }
 function calcRoute(startLng, startLat, destLng, destLat) {
   routingParameters['origin'] = startLat + ',' + startLng;
