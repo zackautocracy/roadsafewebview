@@ -92,15 +92,14 @@ function setDangers () {
   $.ajax({
     url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
   }).done(function(data) {
-    console.log("data d teb:" + data[0]);
     data.forEach(function (el) {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
-        var ic = el.type.replace(' ','_') + '.png'
+        var ic = (el.type.replace(' ','_') + '.png')
         console.log(ic)
         var icon = new H.map.Icon(ic);
-        var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: icon })
+        var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
         dangers.addObject(ksida)
