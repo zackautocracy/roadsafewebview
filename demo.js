@@ -85,6 +85,12 @@ var myPosition
 function setup(lng, lat) {
   map.setZoom(10);
   map.setCenter({ lng: lng, lat: lat });
+  var object
+  for (object of map.getObjects()) {
+    if (object.id === "me") {
+      map.removeObject(object);
+    }
+  }
   myPosition = new H.map.DomMarker({ lng: lng, lat: lat }, {
     icon: new H.map.DomIcon(domIconElement, {
       onAttach: function (clonedElement, domIcon, domMarker) {
@@ -98,6 +104,7 @@ function setup(lng, lat) {
       }
     })
   });
+  myPosition.id = "me"
   map.addObject(myPosition)
 }
 function initSetup(lng, lat) {
