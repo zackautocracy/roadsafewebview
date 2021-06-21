@@ -14,7 +14,7 @@ function init(clonedElement,position) {
 function handler(e) {
   compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
   compass = Math.abs(compass - rotComp)
-  el.style.transform = `translate(-50%, -50%) rotate(${-compass}deg)`
+  el.style.transform = `translate(-50%, -50%) rotate(${compass}deg)`
   //translate(-50%, -50%)
 }
 // let pointDegree;
