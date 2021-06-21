@@ -18,7 +18,7 @@ var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vecto
   pixelRatio: window.devicePixelRatio || 1
 });
 var rotComp
-map.getViewModel().getLookAtData().heading.addEventListener('sync', function () {
+map.getViewModel().getLookAtData().addEventListener('sync', function () {
   rotComp = map.getViewModel().getLookAtData().heading - 180
   alert(rotComp)
 })
