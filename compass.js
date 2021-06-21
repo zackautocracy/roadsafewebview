@@ -3,6 +3,7 @@ const isIOS =
   navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
   navigator.userAgent.match(/AppleWebKit/);
 var el
+var rotComp=0;
 function init(clonedElement,position) {
   el = clonedElement
   if (!isIOS) {
@@ -10,10 +11,9 @@ function init(clonedElement,position) {
   }
   // locationHandler(position)
 }
-var rotComp=0;
 function handler(e) {
   compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
-  compass = ((compass + rotcomp)%360)
+  compass = ((compass + rotComp)%360)
   el.style.transform = `translate(-50%, -50%) rotate(${-compass}deg)`
   //translate(-50%, -50%)
 }
