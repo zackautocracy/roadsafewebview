@@ -19,7 +19,7 @@ var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vecto
 });
 var rotComp
 map.getViewModel().addEventListener('sync', function () {
-  rotComp = map.getViewModel().getLookAtData().heading - 180
+  rotComp = (map.getViewModel().getLookAtData().heading - 180) % 360
   console.log(rotComp)
 })
 var routeLine
