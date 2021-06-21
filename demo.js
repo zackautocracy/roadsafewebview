@@ -80,19 +80,10 @@ var myPosition
 function setup(lng, lat) {
   map.setZoom(10);
   map.setCenter({ lng: lng, lat: lat });
-  var myPositionCheck = new H.map.Marker({ lng: lng, lat: lat })
   myPosition = new H.map.DomMarker({ lng: lng, lat: lat }, {
     icon: new H.map.DomIcon(domIconElement, {
       onAttach: function (clonedElement, domIcon, domMarker) {
-        var clonedContent = clonedElement.getElementsByTagName('img')[0];
-
-        // // set last used value for rotation when dom icon is attached (back in map's viewport)
-        // clonedContent.style.transform = 'rotate(' + counter + 'deg)';
-
-        // // set interval to rotate icon's content by 45 degrees every second.
-        // interval = setInterval(function () {
-        //   clonedContent.style.transform = 'rotate(' + (counter += 45) + 'deg)';
-        // }, 1000)
+        var clonedContent = clonedElement.getElementsByTagName('img')[0]
         init (clonedContent, { lng: lng, lat: lat })
         console.log()
       },
@@ -103,7 +94,6 @@ function setup(lng, lat) {
     })
   });
   map.addObject(myPosition)
-  map.addObject(myPositionCheck)
 }
 function initSetup(lng, lat) {
   map.setZoom(4);
@@ -137,7 +127,7 @@ function getPosition(s) {
     });
   }, (error) => { alert(error) });
 }
-setup(6.8498,33.9716)
+// setup(6.8498,33.9716)
 // calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 function routingFunc() {
   var starter = myPosition.getGeometry();
