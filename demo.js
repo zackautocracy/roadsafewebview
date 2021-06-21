@@ -17,7 +17,7 @@ var defaultLayers = platform.createDefaultLayers();
 var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vector.normal.map, {
   pixelRatio: window.devicePixelRatio || 1
 });
-var rotComp
+
 map.getViewModel().addEventListener('sync', function () {
   rotComp = ((map.getViewModel().getLookAtData().heading - 180) % 360)
   console.log("rotcomp: " + rotComp)
