@@ -24,7 +24,7 @@ var domIconElement = document.createElement('div')
 var interval
 var counter = 0
 // domIconElement.style.margin = '-20px 0 0 -20px';
-domIconElement.innerHTML = '<img id="self" src="self.png" width="150px"/>'
+domIconElement.innerHTML = '<img id="self" style="transform:translate(-10px, -10px)" src="self.png" width="150px"/>'
 var onResult = function (result) {
   // ensure that at least one route was found
   if (result.routes.length) {
