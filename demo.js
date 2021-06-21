@@ -26,6 +26,7 @@ var counter = 0
 // domIconElement.style.margin = '-20px 0 0 -20px';
 var domIconElement = document.createElement('div')
 domIconElement.innerHTML = '<img id="self" style="border: 1px solid red" src="self.png" width="150px"/>'
+domIconElement.style = 'z-index:0'
 var onResult = function (result) {
   // ensure that at least one route was found
   if (result.routes.length) {
