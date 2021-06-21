@@ -116,11 +116,12 @@ function setDangers () {
           lineCap: 'square'
         };
         ars[ars.length] = 'bbox:' + (parseFloat(el.location.longitude) - deltaLng) + ',' + (parseFloat(el.location.latitude) - deltaLat) + ',' + (parseFloat(el.location.longitude) + deltaLng) + ',' + (parseFloat(el.location.latitude) + deltaLat)
-        var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) - deltaLng , parseFloat(el.location.latitude) + deltaLat , parseFloat(el.location.longitude) + deltaLng), { style: customStyle })
+        // var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) - deltaLng , parseFloat(el.location.latitude) + deltaLat , parseFloat(el.location.longitude) + deltaLng), { style: customStyle })
       }
-      map.addObject(rect)
+      // map.addObject(rect)
     })
     routingParameters['avoid[areas]'] = ars.join('|')
+    console.log(routingParameters['avoid[areas]'])
     // routingFunc()
   });
 }
