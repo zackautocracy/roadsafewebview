@@ -190,7 +190,9 @@ searchBox.addEventListener('keypress', (event) => {
 function goToMyPosition () {
   map.setCenter(myPosition.getGeometry())
 }
-
+function updatePosition (lng, lat) {
+  myPosition.setGeometry({lng: lng, lat: lat })
+}
 /*
 function addInfoBubble(map) {
   var group = new H.map.Group();
