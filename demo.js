@@ -24,7 +24,7 @@ var domIconElement = document.createElement('div')
 var interval
 var counter = 0
 // domIconElement.style.margin = '-20px 0 0 -20px';
-domIconElement.innerHTML = '<img id="self" src="self.png" width="150px"/>'
+domIconElement.innerHTML = '<img id="self" style="border: 1px solid red" src="self.png" width="150px"/>'
 var onResult = function (result) {
   // ensure that at least one route was found
   if (result.routes.length) {
@@ -80,7 +80,7 @@ var myPosition
 function setup(lng, lat) {
   map.setZoom(10);
   map.setCenter({ lng: lng, lat: lat });
-  // myPosition = new H.map.Marker({ lng: lng, lat: lat });
+  var myPositionCheck = new H.map.Marker({ lng: lng, lat: lat })
   myPosition = new H.map.DomMarker({ lng: lng, lat: lat }, {
     icon: new H.map.DomIcon(domIconElement, {
       onAttach: function (clonedElement, domIcon, domMarker) {
@@ -103,6 +103,7 @@ function setup(lng, lat) {
     })
   });
   map.addObject(myPosition)
+  map.addObject(myPositionCheck)
 }
 function initSetup(lng, lat) {
   map.setZoom(4);
