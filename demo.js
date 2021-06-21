@@ -3,7 +3,7 @@ var routingParameters = {
   'transportMode': 'car',
   'avoid[areas]': 'bbox:13.4,52.51,13.375509629584851,52.588313568689344|bbox:13.53,52.51,13.5,52.588313568689344',
   'return': 'polyline'
-};
+}
 var platform = new H.service.Platform({
   'apikey': 'kA9AulfRNm5KJXSiKj2wiUVsETSdOvInigM7wC2yEpc'
 });
@@ -93,19 +93,25 @@ function setDangers () {
   $.ajax({
     url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
   }).done(function(data) {
+    var ars = []
+    var deltaLat = (0.01/111.10)
+    var deltaLng = (0.01/111.32)
     data.forEach(function (el) {
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
         var ic = ('https://zackautocracy.github.io/roadsafewebview/' + el.type.replace(' ','_') + '.png')
         console.log(ic)
-        var ksidaIcon = new H.map.Icon(ic, { size: { w: 50, h: 50 } });
+        var ksidaIcon = new H.map.Icon(ic, { size: { w: 40, h: 40 } });
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: ksidaIcon })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
         dangers.addObject(ksida)
-      }
+        ars[ars.length] = 'bbox:' + (parseFloat(el.location.longitude) - deltaLng) + ',' + (parseFloat(el.location.latitude) - deltaLat) + ',' + (parseFloat(el.location.longitude) + deltaLng) + ',' + (parseFloat(el.location.latitude) + deltaLat)
+        var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.longitude) - deltaLng, parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) + deltaLng, parseFloat(el.location.latitude) + deltaLat))}
     })
+    routingParameters['avoid[areas]'] = ars.join('|')
+    // routingFunc()
   });
 }
 function calcRoute(startLng, startLat, destLng, destLat) {
@@ -196,30 +202,6 @@ function goToMyPosition () {
 function updatePosition (lng, lat) {
   myPosition.setGeometry({lng: lng, lat: lat })
 }
-/*
-function addInfoBubble(map) {
-  var group = new H.map.Group();
-
-  map.addObject(group);
-
-  // add 'tap' event listener, that opens info bubble, to the group
-  group.addEventListener('tap', function (evt) {
-    // event target is the marker itself, group is a parent event target
-    // for all objects that it contains
-    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-      // read custom data
-      content: evt.target.getData()
-    });
-    // show info bubble
-    ui.addBubble(bubble);
-  }, false);
-
-  addMarkerToGroup(group, {lat: 53.439, lng: -2.221},
-    '<div><a href="https://www.mcfc.co.uk">Manchester City</a></div>' +
-    '<div>City of Manchester Stadium<br />Capacity: 55,097</div>');
-
-  addMarkerToGroup(group, {lat: 53.430, lng: -2.961},
-    '<div><a href="https://www.liverpoolfc.tv">Liverpool</a></div>' +
-    '<div>Anfield<br />Capacity: 54,074</div>');
-}
-*/
+ui.getControl('mapsettings').setVisibility(false)
+ui.getControl('zoom').setVisibility(false)
+ui.getControl('scalebar').setVisibility(false)
