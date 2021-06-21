@@ -23,6 +23,7 @@ var startMarker
 var endMarker
 var interval
 var counter = 0
+var heatPoints = []
 // domIconElement.style.margin = '-20px 0 0 -20px';
 var domIconElement = document.createElement('div')
 domIconElement.innerHTML = '<img id="self" src="self.png" width="75px"/>'
@@ -94,11 +95,15 @@ function setDangers () {
     url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
   }).done(function(data) {
     var ars = []
+    heatPoints = []
     var deltaLat = (0.01/111.10)
     var deltaLng = (0.01/111.32)
     // var deltaLat = 2
     // var deltaLng = 2
     data.forEach(function (el) {
+      if(el.status !== 'onhold') {
+        heatPoints[heatPoints.length] = {lng: parseFloat(el.location.longitude), lat: parseFloat(el.location.latitude), value: 10}
+      }
       if (el.status === 'confirmed') {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
@@ -116,6 +121,7 @@ function setDangers () {
           lineCap: 'square'
         };
         ars[ars.length] = 'bbox:' + (parseFloat(el.location.longitude) - deltaLng) + ',' + (parseFloat(el.location.latitude) - deltaLat) + ',' + (parseFloat(el.location.longitude) + deltaLng) + ',' + (parseFloat(el.location.latitude) + deltaLat)
+
         // var rect = new H.map.Rect(new H.geo.Rect(parseFloat(el.location.latitude) - deltaLat, parseFloat(el.location.longitude) - deltaLng , parseFloat(el.location.latitude) + deltaLat , parseFloat(el.location.longitude) + deltaLng), { style: customStyle })
       }
       // map.addObject(rect)
@@ -216,3 +222,22 @@ function updatePosition (lng, lat) {
 ui.getControl('mapsettings').setVisibility(false)
 ui.getControl('zoom').setVisibility(false)
 ui.getControl('scalebar').setVisibility(false)
+
+function showHeatMap () {
+  var heatmapProvider = new H.data.heatmap.Provider({
+    colors: new H.data.heatmap.Colors({
+      '0':   '#008', // dark blue
+      '0.2': '#0b0', // medium green
+      '0.5': '#ff0', // yellow
+      '0.7': '#f00'  // red
+     }, true),
+    opacity: 1,
+    // Paint assumed values in regions where no data is available
+    assumeValues: false
+  });
+  console.log(heatPoints)
+  heatmapProvider.addData(heatPoints);
+
+  map.addLayer(new H.map.layer.TileLayer(heatmapProvider));
+}
+$("#heatmap").click(showHeatMap)
