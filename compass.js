@@ -10,7 +10,7 @@ function init(clonedElement,position) {
   }
   // locationHandler(position)
 }
-
+var rotComp=0;
 function handler(e) {
   compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
   compass = ((compass + rotcomp)%360)
