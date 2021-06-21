@@ -12,7 +12,7 @@ function init(clonedElement,position) {
 }
 
 function handler(e) {
-  compass = (e.webkitCompassHeading - map.getViewModel().getLookAtData.heading) || Math.abs(e.alpha - map.getViewModel().getLookAtData.heading - 360)
+  compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
   el.style.transform = `translate(-50%, -50%) rotate(${-compass}deg)`
   //translate(-50%, -50%)
 }
