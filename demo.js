@@ -4,20 +4,15 @@ var routingParameters = {
   'avoid[areas]': 'bbox:13.4,52.51,13.375509629584851,52.588313568689344|bbox:13.53,52.51,13.5,52.588313568689344',
   'return': 'polyline'
 };
-
 var platform = new H.service.Platform({
   'apikey': 'kA9AulfRNm5KJXSiKj2wiUVsETSdOvInigM7wC2yEpc'
 });
-
 var router = platform.getRoutingService(null, 8);
 var service = platform.getSearchService();
-
 var defaultLayers = platform.createDefaultLayers();
-
 var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vector.normal.map, {
   pixelRatio: window.devicePixelRatio || 1
 });
-
 map.getViewModel().addEventListener('sync', function () {
   rotComp = ((map.getViewModel().getLookAtData().heading - 180) % 360)
   console.log("rotcomp: " + rotComp)
@@ -25,10 +20,10 @@ map.getViewModel().addEventListener('sync', function () {
 var routeLine
 var startMarker
 var endMarker
-var domIconElement = document.createElement('div')
 var interval
 var counter = 0
 // domIconElement.style.margin = '-20px 0 0 -20px';
+var domIconElement = document.createElement('div')
 domIconElement.innerHTML = '<img id="self" style="border: 1px solid red" src="self.png" width="150px"/>'
 var onResult = function (result) {
   // ensure that at least one route was found
@@ -78,12 +73,33 @@ function setDangers () {
   }
   var dangers = new H.map.Group()
   dangers.id = 'danger'
+  dangers.addEventListener('tap', function (evt) {
+    // event target is the marker itself, group is a parent event target
+    // for all objects that it contains
+    // var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+    //   // read custom data
+    //   content: evt.target.getData()
+    // });
+    // // show info bubble
+    // ui.addBubble(bubble);
+    window.location.hash = evt.target.id
+  }, false);
   $.ajax({
     url: "https://roadsafeazurefuncs20210609092106.azurewebsites.net/api/GetShortDangerTrigger",
   }).done(function(data) {
-    console.log("data d teb:" + data);
+    console.log("data d teb:" + data[0]);
+    data.forEach(function (el) {
+      if (el.status === 'confirmed') {
+        // var ksidaIconElement = document.createElement('div')
+        console.log(el)
+        // ksidaIconElement.innerHTML = '<img id="'+el.id+'" style="border: 1px solid red" src="' + /*el.type*/ 'self' + '.png" width="100px"/>'
+        var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude })
+        ksida.id = el.id
+        dangers.addObject(ksida)
+      }
+    })
   });
-
+  map.addObject(dangers)
 }
 function calcRoute(startLng, startLat, destLng, destLat) {
   routingParameters['origin'] = startLat + ',' + startLng;
@@ -96,7 +112,6 @@ function calcRoute(startLng, startLat, destLng, destLat) {
   );
 }
 var myPosition
-// Ensure that the marker can receive drag events
 function setup(lng, lat) {
   map.setZoom(10);
   map.setCenter({ lng: lng, lat: lat });
@@ -119,6 +134,7 @@ function setup(lng, lat) {
       }
     })
   });
+  setDangers()
   myPosition.id = "me"
   map.addObject(myPosition)
 }
@@ -127,7 +143,6 @@ function initSetup(lng, lat) {
   map.setCenter({ lng: lng, lat: lat });
 }
 var mapEvents = new H.mapevents.MapEvents(map);
-// window.addEventListener('resize', () => map.getViewPort().resize());
 var behavior = new H.mapevents.Behavior(mapEvents);
 var searchMarker;
 function getPosition(s) {
@@ -155,7 +170,6 @@ function getPosition(s) {
   }, (error) => { alert(error) });
 }
 setup(6.8498,33.9716)
-// calcRoute(8.68340740740811,50.1120423728813,13.3846220493377,52.5309916298853)
 function routingFunc() {
   var starter = myPosition.getGeometry();
   var ender = searchMarker.getGeometry();
@@ -172,3 +186,30 @@ searchBox.addEventListener('keypress', (event) => {
 function goToMyPosition () {
   map.setCenter(myPosition.getGeometry())
 }
+/*
+function addInfoBubble(map) {
+  var group = new H.map.Group();
+
+  map.addObject(group);
+
+  // add 'tap' event listener, that opens info bubble, to the group
+  group.addEventListener('tap', function (evt) {
+    // event target is the marker itself, group is a parent event target
+    // for all objects that it contains
+    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+      // read custom data
+      content: evt.target.getData()
+    });
+    // show info bubble
+    ui.addBubble(bubble);
+  }, false);
+
+  addMarkerToGroup(group, {lat: 53.439, lng: -2.221},
+    '<div><a href="https://www.mcfc.co.uk">Manchester City</a></div>' +
+    '<div>City of Manchester Stadium<br />Capacity: 55,097</div>');
+
+  addMarkerToGroup(group, {lat: 53.430, lng: -2.961},
+    '<div><a href="https://www.liverpoolfc.tv">Liverpool</a></div>' +
+    '<div>Anfield<br />Capacity: 54,074</div>');
+}
+*/
