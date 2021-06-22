@@ -260,4 +260,3 @@ function heatmap() {
     map.addLayer(hmap)
   }
 }
-$("#heatmap").click(heatmap)
