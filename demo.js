@@ -218,6 +218,7 @@ searchBox.addEventListener('keypress', (event) => {
   if (event.keyCode === 13) {
     var searchStr = searchBox.value
     getPosition(searchStr)
+    $('#searchInput').blur()
   }
 })
 function goToMyPosition () {
