@@ -15,7 +15,6 @@ var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vecto
 });
 map.getViewModel().addEventListener('sync', function () {
   rotComp = ((map.getViewModel().getLookAtData().heading - 180) % 360)
-  console.log("rotcomp: " + rotComp)
 })
 var ui = H.ui.UI.createDefault(map, defaultLayers);
 var routeLine
@@ -111,7 +110,6 @@ function setDangers () {
         // var ksidaIconElement = document.createElement('div')
         console.log(el)
         var ic = ('https://zackautocracy.github.io/roadsafewebview/' + el.type.replace(' ','_') + '.png')
-        console.log(ic)
         var ksidaIcon = new H.map.Icon(ic, { size: { w: 40, h: 40 } });
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: ksidaIcon })
         ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
@@ -162,7 +160,6 @@ function setup(lng, lat) {
       onAttach: function (clonedElement, domIcon, domMarker) {
         var clonedContent = clonedElement.getElementsByTagName('img')[0]
         init (clonedContent, { lng: lng, lat: lat })
-        console.log()
       },
       onDetach: function (clonedElement, domIcon, domMarker) {
         // stop the rotation if dom icon is not in map's viewport
@@ -191,12 +188,10 @@ function getPosition(s) {
   service.geocode({
     q: s
   }, (result) => {
-    console.log("ana hna")
     // Add a marker for each location found
     var g = new H.map.Group()
     g.id = "searchMarkers"
     result.items.forEach(function (item) {
-      console.log("kayn Items")
       map.setCenter(item.position);
       map.setZoom(13);
       var ic = new H.map.Icon('https://zackautocracy.github.io/roadsafewebview/marker.png', { size: { w: 40, h: 40 } })
@@ -210,7 +205,6 @@ setup(6.8498,33.9716)
 function routingFunc() {
   var starter = myPosition.getGeometry();
   var ender = searchMarker.getGeometry();
-  // console.log(searchMarker)
   calcRoute(starter.lng, starter.lat, ender.lng, ender.lat)
 }
 var searchBox = document.getElementById("searchInput")
@@ -245,7 +239,6 @@ var heatmapProvider = new H.data.heatmap.Provider({
 var hmap = new H.map.layer.TileLayer(heatmapProvider)
 
 function showHeatMap () {
-  console.log(heatPoints)
   heatmapProvider.addData(heatPoints);
   // map.addLayer(hmap);
 }
@@ -261,7 +254,6 @@ function heatmap() {
   if (flag === 0) {
     map.addObject(dangers)
     map.removeLayer(hmap)
-    console.log("test")
   } else {
     showHeatMap()
     map.addLayer(hmap)
@@ -279,7 +271,6 @@ function notification () {
       ret[ret.length] = {type: n.type + ' (environ ' + parseInt(getRadius(n)*1000) + ' m)', comment: n.comment }
     }
   })
-  console.log(ret)
   return ret
 }
 // $("#heatmap").click(notification)
