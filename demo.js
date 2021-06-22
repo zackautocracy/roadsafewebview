@@ -67,6 +67,7 @@ var onResult = function (result) {
     });
   }
 };
+var dangers
 function setDangers () {
   var object
   for (object of map.getObjects()) {
@@ -74,7 +75,7 @@ function setDangers () {
       map.removeObject(object);
     }
   }
-  var dangers = new H.map.Group()
+  dangers = new H.map.Group()
   dangers.id = 'danger'
   
   map.addObject(dangers)
@@ -223,21 +224,40 @@ ui.getControl('mapsettings').setVisibility(false)
 ui.getControl('zoom').setVisibility(false)
 ui.getControl('scalebar').setVisibility(false)
 
+var heatmapProvider = new H.data.heatmap.Provider({
+  colors: new H.data.heatmap.Colors({
+    '0':   '#008', // dark blue
+    '0.2': '#0b0', // medium green
+    '0.5': '#ff0', // yellow
+    '0.7': '#f00'  // red
+   }, true),
+  opacity: 1,
+  // Paint assumed values in regions where no data is available
+  assumeValues: false
+});
+var hmap = new H.map.layer.TileLayer(heatmapProvider)
+
 function showHeatMap () {
-  var heatmapProvider = new H.data.heatmap.Provider({
-    colors: new H.data.heatmap.Colors({
-      '0':   '#008', // dark blue
-      '0.2': '#0b0', // medium green
-      '0.5': '#ff0', // yellow
-      '0.7': '#f00'  // red
-     }, true),
-    opacity: 1,
-    // Paint assumed values in regions where no data is available
-    assumeValues: false
-  });
   console.log(heatPoints)
   heatmapProvider.addData(heatPoints);
-
-  map.addLayer(new H.map.layer.TileLayer(heatmapProvider));
+  // map.addLayer(hmap);
 }
-$("#heatmap").click(showHeatMap)
+function heatmap() {
+  var object
+  var flag=0
+  for (object of map.getObjects()) {
+    if (object.id === 'danger') {
+      map.removeObject(object);
+      flag = 1
+    }
+  }
+  if (flag === 0) {
+    map.addObject(dangers)
+    map.removeLayer(hmap)
+    console.log("test")
+  } else {
+    showHeatMap()
+    map.addLayer(hmap)
+  }
+}
+$("#heatmap").click(heatmap)
