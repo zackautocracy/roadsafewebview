@@ -45,7 +45,7 @@ var onResult = function (result) {
 
       // Create a polyline to display the route:
       routeLine = new H.map.Polyline(linestring, {
-        style: { strokeColor: '#00B5FF', lineWidth: 4 }
+        style: { strokeColor: '#ef4a68', lineWidth: 4 }
       });
 
       routeLine.id = 'route'
