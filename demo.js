@@ -274,3 +274,7 @@ function notification () {
   return ret
 }
 // $("#heatmap").click(notification)
+$('.x').click(function () {
+  $('#searchInput').val("");
+  $('#searchInput').blur();
+})
