@@ -270,49 +270,39 @@ function getRadius(v) {
 }
 function notification () {
   var ret=[]
+  var i=1
   New.forEach((n) => {
-    if (getRadius(n) <= 1) {
-      ret[ret.length] = {type: n.type + ' (environ ' + parseInt(getRadius(n)*1000) + ' m)', comment: n.comment }
+    if (getRadius(n)<=1) {
+      setTimeout(function timer() {
+        createNotification(n.type + ' (environ ' + parseInt(getRadius(n)*1000) + ' m)', n.comment )
+      }, i * 800)
+      i++
     }
   })
-  return ret
 }
 // $("#heatmap").click(notification)
 $('.x').click(function () {
   $('#searchInput').val("");
   $('#searchInput').blur();
-  createNotification()
 })
-
 $.notify.addStyle('notif', {
   html: `
-    <div class="search-bar" style="width:90vw;z-index:100;margin-bottom:3px">
-      <div class='notification'>
-        <h3 style="margin: 10px 0px 5px 0px;">Title</h3>
-        <p style="font-size: 16px;margin: 5px 0px 10px 0px;">comment</p>
-      </div>
+    <div class="search-bar" style="width:90vw;z-index:100;margin-bottom:3px" data-notify-html='title'/>
     </div>`
 });
 
-function createNotification() {
-  // $('.notification').fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500);
-  // $('.notification').css({
-  //   top: -200,
-  //   opacity: 0,
-  //   display: 'block'
-  // })
-  // $.notify("Warning: Self-destruct in 3.. 2..", "warn");
-  // $('.notification').animate({
-  //   top: 1500,
-  //   opacity: 1,
-  // }, 2000, function() {
-  // });
+function createNotification(title,comment) {
+  var d = $(`<div class='notification'>
+  <h3 style="margin: 10px 0px 5px 0px;">` + title + `</h3>
+  <p style="font-size: 16px;margin: 5px 0px 10px 0px;">` + comment + `</p>
+</div>`)
   $.notify({
-    title: 'Would you like some Foo ?'
+    title: d
   }, { 
     style: 'notif',
-    autoHide: false,
+    autoHide: true,
     clickToHide: true,
+    autoHideDelay: 2400,
     globalPosition: 'left top',
     gap:10
   });
