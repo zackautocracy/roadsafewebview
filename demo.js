@@ -24,6 +24,8 @@ var endMarker
 var interval
 var counter = 0
 var heatPoints = []
+var old = []
+var New=[]
 // domIconElement.style.margin = '-20px 0 0 -20px';
 var domIconElement = document.createElement('div')
 domIconElement.innerHTML = '<img id="self" src="self.png" width="75px"/>'
@@ -127,6 +129,9 @@ function setDangers () {
       }
       // map.addObject(rect)
     })
+    var d= data
+    old = d.filter(value => old.includes(value))
+    New = d.filter(value => !old.includes(value))
     routingParameters['avoid[areas]'] = ars.join('|')
     console.log(routingParameters['avoid[areas]'])
     // routingFunc()
@@ -260,3 +265,19 @@ function heatmap() {
     map.addLayer(hmap)
   }
 }
+function getRadius(v) {
+  var x = Math.abs(myPosition.getGeometry().lat - v.location.latitude) * 111.10
+  var y = Math.abs(myPosition.getGeometry().lng - v.location.longitude) * 111.32
+  return  Math.sqrt((x**2) + (y**2))
+}
+function notification () {
+  var ret=[]
+  New.forEach((n) => {
+    if (getRadius(n) <= 1) {
+      ret[ret.length] = {type: n.type + ' (environ ' + parseInt(getRadius(n)*1000) + ' m)', comment: n.comment }
+    }
+  })
+  console.log(ret)
+  return ret
+}
+// $("#heatmap").click(notification)
