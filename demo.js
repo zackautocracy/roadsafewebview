@@ -99,8 +99,8 @@ function setDangers () {
   }).done(function(data) {
     var ars = []
     heatPoints = []
-    var deltaLat = (0.01/111.10)
-    var deltaLng = (0.01/111.32)
+    var deltaLat = (1/111.10)
+    var deltaLng = (1/111.32)
     // var deltaLat = 2
     // var deltaLng = 2
     data.forEach(function (el) {
@@ -199,7 +199,8 @@ function getPosition(s) {
       console.log("kayn Items")
       map.setCenter(item.position);
       map.setZoom(13);
-      searchMarker = new H.map.Marker(item.position);
+      var ic = new H.map.Icon('https://zackautocracy.github.io/roadsafewebview/marker.png', { size: { w: 40, h: 40 } })
+      searchMarker = new H.map.Marker(item.position, {icon: ic });
       g.addObject(searchMarker);
       map.addObject(g)
     });
