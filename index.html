@@ -9,6 +9,7 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-data.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="notify.min.js"></script>
     
   </head>
   <style>
@@ -40,6 +41,31 @@
       right:7%;
       top:40px;
    }
+   .notifyjs-notif-base .notification{
+      width:80%;
+      border-radius:10px;
+      margin:auto;
+      border:none;
+      padding: 3px 15px;
+      box-shadow: 0px 0px 5px #555;
+      background:#EFEFEF;
+      font-family: Arial, Helvetica, sans-serif;
+
+   }
+   .notifyjs-corner{
+     top:90!important;
+     margin:0!important;
+     width:100%!important;
+   }
+   .notifyjs-wrapper{
+    margin:10px 0!important;
+   }
+   .notifyjs-container{
+    margin:0!important;
+   }
+   .notifyjs-notif-base{
+    width:100%!important;
+   }
   </style> 
   <body style="margin:0px;">
     <div style="width: 100%; height: 100%; padding: 0px;" id="mapContainer" onclick="$('#searchInput').blur()"></div>
@@ -48,9 +74,13 @@
       <input id="searchInput" type="text" placeholder="Search" class="search">
       <!-- $('searchInput').blur(); -->
     </div>
-    <!-- <div style="width:50px; height:50px; display: flex; flex-direction: column;justify-content: space-around;text-align: center; position: absolute; bottom: 10;right:10 ; background: black;color:white; border-radius:50px;border:none;" id="heatmap">
-      <span>HM</span>
+    <!-- <div class="search-bar" style="top:100;z-index:100">
+        <div class='notification'>
+          <h3 style="margin: 10px 0px 5px 0px;">Title</h3>
+          <p style="font-size: 16px;margin: 5px 0px 10px 0px;">comment</p>
+        </div>
     </div> -->
+    
   </body>
   <script type="text/javascript" src="./compass.js"></script>
   <script type="text/javascript" src="./demo.js"></script>

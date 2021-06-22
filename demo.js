@@ -25,6 +25,7 @@ var counter = 0
 var heatPoints = []
 var old = []
 var New=[]
+var heatmapOn=0
 // domIconElement.style.margin = '-20px 0 0 -20px';
 var domIconElement = document.createElement('div')
 domIconElement.innerHTML = '<img id="self" src="self.png" width="75px"/>'
@@ -78,8 +79,9 @@ function setDangers () {
   }
   dangers = new H.map.Group()
   dangers.id = 'danger'
-  
-  map.addObject(dangers)
+  if(!heatmapOn) {
+    map.addObject(dangers)
+  }
   dangers.addEventListener('longpress', function (evt) {
     window.location.hash = evt.target.id
   }, false);
@@ -253,8 +255,10 @@ function heatmap() {
   }
   if (flag === 0) {
     map.addObject(dangers)
+    heatmapOn=0
     map.removeLayer(hmap)
   } else {
+    heatmapOn=1
     showHeatMap()
     map.addLayer(hmap)
   }
@@ -277,4 +281,39 @@ function notification () {
 $('.x').click(function () {
   $('#searchInput').val("");
   $('#searchInput').blur();
+  createNotification()
 })
+
+$.notify.addStyle('notif', {
+  html: `
+    <div class="search-bar" style="width:90vw;z-index:100;margin-bottom:3px">
+      <div class='notification'>
+        <h3 style="margin: 10px 0px 5px 0px;">Title</h3>
+        <p style="font-size: 16px;margin: 5px 0px 10px 0px;">comment</p>
+      </div>
+    </div>`
+});
+
+function createNotification() {
+  // $('.notification').fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500);
+  // $('.notification').css({
+  //   top: -200,
+  //   opacity: 0,
+  //   display: 'block'
+  // })
+  // $.notify("Warning: Self-destruct in 3.. 2..", "warn");
+  // $('.notification').animate({
+  //   top: 1500,
+  //   opacity: 1,
+  // }, 2000, function() {
+  // });
+  $.notify({
+    title: 'Would you like some Foo ?'
+  }, { 
+    style: 'notif',
+    autoHide: false,
+    clickToHide: true,
+    globalPosition: 'left top',
+    gap:10
+  });
+}
