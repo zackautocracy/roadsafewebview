@@ -35,10 +35,16 @@
       box-shadow: 0px 0px 8px #ef4a68;
       outline:none;
     }
+    .x{
+      position:absolute;
+      right:7%;
+      top:40px;
+   }
   </style> 
   <body style="margin:0px;">
     <div style="width: 100%; height: 100%; padding: 0px;" id="mapContainer" onclick="$('#searchInput').blur()"></div>
     <div class="search-bar">
+      <span class="x" onclick="$('searchInput').blur();$('searchInput').val('');"><img src="x.png" height=20px/></span>
       <input id="searchInput" type="text" placeholder="Search" class="search">
     </div>
     <!-- <div style="width:50px; height:50px; display: flex; flex-direction: column;justify-content: space-around;text-align: center; position: absolute; bottom: 10;right:10 ; background: black;color:white; border-radius:50px;border:none;" id="heatmap">
