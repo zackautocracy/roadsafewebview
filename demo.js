@@ -274,7 +274,7 @@ function notification () {
   New.forEach((n) => {
     if (getRadius(n)<=1) {
       setTimeout(function timer() {
-        createNotification(n.type + ' (environ ' + parseInt(getRadius(n)*1000) + ' m)', n.comment )
+        createNotification(n.type + ' (approx ' + parseInt(getRadius(n)*1000) + ' m)', n.comment )
       }, i * 800)
       i++
     }
