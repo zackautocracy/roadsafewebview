@@ -300,6 +300,11 @@ $('.x').click(function () {
       map.removeObject(object);
     }
   }
+  for (object of map.getObjects()) {
+    if (object.id === "searchMarkers") {
+      map.removeObject(object);
+    }
+  }
 })
 $.notify.addStyle('notif', {
   html: `
