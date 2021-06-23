@@ -328,3 +328,7 @@ function createNotification(title,comment) {
     gap:10
   });
 }
+setTimeout(function(){ 
+  setDangers()
+  notification()
+}, 30000);
