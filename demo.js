@@ -56,7 +56,8 @@ var onResult = function (result) {
       // startMarker = new H.map.Marker(section.departure.place.location);
 
       // // Create a marker for the end point:
-      endMarker = new H.map.Marker(section.arrival.place.location);
+      var ic = new H.map.Icon('https://zackautocracy.github.io/roadsafewebview/marker.png', { size: { w: 40, h: 40 } })
+      endMarker = new H.map.Marker(section.arrival.place.location,{icon: ic});
 
       // Add the route polyline and the two markers to the map:
       // group.addObject(startMarker)
@@ -114,7 +115,7 @@ function setDangers () {
         var ic = ('https://zackautocracy.github.io/roadsafewebview/' + el.type.replace(' ','_') + '.png')
         var ksidaIcon = new H.map.Icon(ic, { size: { w: 40, h: 40 } });
         var ksida = new H.map.Marker({ lng: el.location.longitude, lat: el.location.latitude }, {icon: ksidaIcon })
-        ksida.setData('<div><img src="' + el.liveImage + '"/></div><div><p>' + el.comment + '</p></div>');
+        ksida.setData('<div><img src="' + el.liveImage + '" width=150px/></div><div><p>' + el.comment + '</p></div>');
         ksida.id = el.id
         dangers.addObject(ksida)
         var customStyle = {
@@ -130,11 +131,18 @@ function setDangers () {
       // map.addObject(rect)
     })
     var d= data
-    old = d.filter(value => old.includes(value))
-    New = d.filter(value => !old.includes(value))
+    console.log("old before"+JSON.stringify(old))
+    old = d.filter(function (value) {
+      return old.indexOf( value ) >= 0
+    })
+    New = d.filter(function (value) {
+      return old.indexOf( value ) < 0
+    })
     routingParameters['avoid[areas]'] = ars.join('|')
     console.log(routingParameters['avoid[areas]'])
-    // routingFunc()
+    console.log(old)
+    console.log(New)
+    old=d
   });
 }
 function calcRoute(startLng, startLat, destLng, destLat) {
@@ -272,18 +280,26 @@ function notification () {
   var ret=[]
   var i=1
   New.forEach((n) => {
-    if (getRadius(n)<=1) {
+    if (getRadius(n)<=1 && n.status === "confirmed") {
       setTimeout(function timer() {
         createNotification(n.type + ' (approx ' + parseInt(getRadius(n)*1000) + ' m)', n.comment )
       }, i * 800)
       i++
     }
   })
+  old=New
+  New=[]
 }
 // $("#heatmap").click(notification)
 $('.x').click(function () {
   $('#searchInput').val("");
   $('#searchInput').blur();
+  var object;
+  for (object of map.getObjects()) {
+    if (object.id === "route") {
+      map.removeObject(object);
+    }
+  }
 })
 $.notify.addStyle('notif', {
   html: `
